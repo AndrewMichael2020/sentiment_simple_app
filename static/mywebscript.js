@@ -1,5 +1,5 @@
-let RunSentimentAnalysis = ()=>{
-    textToAnalyze = document.getElementById("textToAnalyze").value;
+let RunSentimentAnalysis = () => {
+    let textToAnalyze = document.getElementById("textToAnalyze").value;
 
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -7,6 +7,12 @@ let RunSentimentAnalysis = ()=>{
             document.getElementById("system_response").innerHTML = xhttp.responseText;
         }
     };
-    xhttp.open("GET", "sentimentAnalyzer?textToAnalyze"+"="+textToAnalyze, true);
-    xhttp.send();
-}
+
+    // Prepare the data to send in the POST request
+    let data = new FormData();
+    data.append("textToAnalyze", textToAnalyze);  // Send the text in form data
+
+    // Open the POST request and send the data
+    xhttp.open("POST", "/sent_analyze", true);
+    xhttp.send(data);
+};
